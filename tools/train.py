@@ -6,10 +6,11 @@ import os.path as osp
 from mmengine.config import Config, DictAction
 from mmengine.registry import RUNNERS
 from mmengine.runner import Runner
-
 from mmdet.utils import setup_cache_size_limit_of_dynamo
 
-
+import torch
+torch.set_float32_matmul_precision('high')
+# torch.backends.cudnn.benchmark = True
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
     parser.add_argument('config', help='train config file path')
