@@ -27,16 +27,16 @@ model = dict(
     ),
     backbone=dict(
         type='mmpretrain.TIMMBackbone',
-        model_name='mobilenetv3_large_100.ra_in1k',
+        model_name='mobilenetv3_large_100.ra_in1k',  # TIMM model name
         features_only=True,
-        out_indices=(2, 3, 4),
+        out_indices=(2, 3, 4),  # Selecting feature maps: [24, 48, 576]
         pretrained=True,
         num_classes=0,
         global_pool=''
     ),
     encoder=dict(
         type='InstanceContextEncoder',
-        in_channels=[24, 48, 576],
+        in_channels=[40, 112, 960],   # Updated to match MobileNetV3 feature maps
         out_channels=256
     ),
     decoder=dict(
@@ -155,10 +155,10 @@ log_processor = dict(by_epoch=False)
 
 auto_scale_lr = dict(base_batch_size=64, enable=True)
 
-_base_.visualizer.vis_backends = [
-    dict(
-        type='WandbVisBackend',
-        init_kwargs={'project': 'mmdet-sparseinst-cityscapes'}
-    ),
-]
-load_from = './work_dirs/sparseinst_mobilenetv3small-8xb8-ms-270k-coco/iter_270000.pth'  # noqa
+# _base_.visualizer.vis_backends = [
+#     dict(
+#         type='WandbVisBackend',
+#         init_kwargs={'project': 'mmdet-sparseinst-cityscapes'}
+#     ),
+# ]
+load_from = './work_dirs/sparseinst_mobilenetv3large-8xb8-ms-270k-coco/iter_270000.pth'  # noqa
