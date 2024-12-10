@@ -27,16 +27,17 @@ model = dict(
     #     init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50')),
     backbone=dict(
         type='mmpretrain.TIMMBackbone',
-        model_name='mobilenetv3_small_100',  # TIMM model name
+        model_name='mobilenetv3_large_100.ra_in1k',  # TIMM model name
         features_only=True,
         out_indices=(2, 3, 4),  # Selecting feature maps: [24, 48, 576]
         pretrained=True,
         num_classes=0,
         global_pool=''
+
     ),
     encoder=dict(
         type='InstanceContextEncoder',
-        in_channels=[24, 48, 576],   # Updated to match MobileNetV3 feature maps
+        in_channels=[40, 112, 960],   # Updated to match MobileNetV3 feature maps
         out_channels=256
     ),
     decoder=dict(
@@ -159,9 +160,6 @@ _base_.visualizer.vis_backends = [
         init_kwargs={
             'project': 'mmdet-sparseinst',
             # 'entity': 'mobilenetv3-small-100'
-            'resume': 'auto',
-            'id': 'fml94lm6',
-            'allow_val_change': True,
         },
     ),
 ]
