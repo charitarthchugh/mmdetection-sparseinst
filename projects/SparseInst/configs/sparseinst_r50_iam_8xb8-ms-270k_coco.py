@@ -144,3 +144,9 @@ log_processor = dict(by_epoch=False)
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
 auto_scale_lr = dict(base_batch_size=64, enable=True)
+_base_.visualizer.vis_backends = [
+    dict(
+        type='WandbVisBackend',
+        init_kwargs={'project': 'mmdet-sparseinst'}
+    ),
+]
